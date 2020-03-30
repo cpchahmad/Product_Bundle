@@ -52,7 +52,7 @@ class CheckoutController extends Controller
 
 //        dd($data);
 //        dd($this->helper->getShopDomain($shop));
-        $draft_order = $this->helper->getShopDomain($shop)->rest('POST', '/admin/draft_orders', $data);
+        $draft_order = $this->helper->getShopifyDomain($shop)->rest('POST', '/admin/draft_orders', $data);
         if($draft_order->status == true) {
             $response = [
                 'status' => 'success',
