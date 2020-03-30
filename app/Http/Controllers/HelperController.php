@@ -25,8 +25,8 @@ class HelperController extends Controller
         $this->api->setApiKey(env('SHOPIFY_API_KEY'));
         $this->api->setApiSecret(env('SHOPIFY_API_SECRET'));
         $this->api->setVersion(env('SHOPIFY_API_VERSION'));
-        $this->api->setShop($this->getShop()->shopify_domain);
-        $this->api->setAccessToken($this->getShop()->shopify_token);
+        $this->api->setShop($this->getShop()->name);
+        $this->api->setAccessToken($this->getShop()->password);
         return $this->api;
     }
 }
