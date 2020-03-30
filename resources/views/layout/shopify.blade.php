@@ -10,6 +10,19 @@
         href="https://unpkg.com/@shopify/polaris@4.16.0/styles.min.css"
     />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+    @if(config('shopify-app.appbridge_enabled'))
+        <script src="https://unpkg.com/@shopify/app-bridge{{ config('shopify-app.appbridge_version') ? '@'.config('shopify-app.appbridge_version') : '' }}"></script>
+        <script>
+            var AppBridge = window['app-bridge'];
+            var createApp = AppBridge.default;
+            var app = createApp({
+                apiKey: '{{ config('shopify-app.api_key') }}',
+                shopOrigin: '{{ ShopifyApp::shop()->shopify_domain }}',
+                forceRedirect: true,
+            });
+        </script>
+    @endif
 </head>
 <body>
 
