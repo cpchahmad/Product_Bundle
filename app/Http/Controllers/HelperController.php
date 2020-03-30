@@ -21,13 +21,13 @@ class HelperController extends Controller
         return User::where('name', $shop)->first();
     }
     public function getShopify(){
-        dd($this->getShop());
         $this->api = new BasicShopifyAPI();
         $this->api->setApiKey(env('SHOPIFY_API_KEY'));
         $this->api->setApiSecret(env('SHOPIFY_API_SECRET'));
         $this->api->setVersion(env('SHOPIFY_API_VERSION'));
         $this->api->setShop($this->getShop()->name);
         $this->api->setAccessToken($this->getShop()->password);
+        dd($this->api);
         return $this->api;
     }
 }
