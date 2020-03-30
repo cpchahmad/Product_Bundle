@@ -18,11 +18,14 @@
             var createApp = AppBridge.default;
             var app = createApp({
                 apiKey: '{{ config('shopify-app.api_key') }}',
-                shopOrigin: '{{ ShopifyApp::shop()->shopify_domain }}',
+                shopOrigin: '{{ Auth::user()->name }}',
                 forceRedirect: true,
             });
         </script>
+
+        @include('shopify-app::partials.flash_messages')
     @endif
+
 </head>
 <body>
 
