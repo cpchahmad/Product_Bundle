@@ -3,8 +3,6 @@ const API_KEY = "vVWvFivBNmxyEefCxaZkB6JqsGWcxq";
 const API_URL = "https://api.cloudways.com/api/v1";
 const EMAIL = "cp.chahmad@gmail.com";
 
-//https://brandit-app.com/git.php?server_id=176572&app_id=1220036&git_url=git@github.com:cpchahmad/BranditLive2.0.git&branch_name=master
-
 function callCloudwaysAPI($method, $url, $accessToken, $post = [])
 {
     $baseURL = API_URL;
