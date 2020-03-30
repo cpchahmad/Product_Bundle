@@ -1,0 +1,29 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', 'BundlesController@index')->name('home')->middleware('auth.shopify');
+Route::group(['prefix' => 'admin', 'middleware' => ['auth.shopify']], function(){
+    Route::get('/', 'BundlesController@index')->name('home');
+    Route::get('dashboard', 'BundlesController@index')->name('admin.dashboard');
+    Route::get('bundles', 'BundlesController@index')->name('admin.bundles');
+    Route::get('create', 'BundlesController@create')->name('admin.bundles.create');
+    Route::get('create/bundle', 'BundlesController@createPost')->name('admin.bundles.create.post');
+    Route::get('bundles/{id}', 'BundlesController@Bundle')->name('admin.bundles.view');
+    Route::get('bundles/{id}/delete', 'BundlesController@BundleDelete')->name('admin.bundles.delete');
+    Route::get('products', 'ProductsController@index')->name('admin.products');
+    Route::get('products/sync', 'ProductsController@ProductSync')->name('admin.products.sync');
+});
+
+Route::any('checkout', 'CheckoutController@CreateCheckout')->name('create.checkout');
