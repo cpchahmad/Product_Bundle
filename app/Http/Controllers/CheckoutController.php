@@ -51,7 +51,7 @@ class CheckoutController extends Controller
         ];
 
 //        dd($data);
-        dd($this->helper->getShopDomain($shop));
+//        dd($this->helper->getShopDomain($shop));
         $draft_order = $this->helper->getShopDomain($shop)->rest('POST', '/admin/draft_orders', $data);
         if($draft_order->status == true) {
             $response = [
