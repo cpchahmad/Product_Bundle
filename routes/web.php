@@ -19,7 +19,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth.shopify']], function()
     Route::get('dashboard', 'BundlesController@index')->name('admin.dashboard');
     Route::get('bundles', 'BundlesController@index')->name('admin.bundles');
     Route::get('create', 'BundlesController@create')->name('admin.bundles.create');
-    Route::get('create/bundle', 'BundlesController@createPost')->name('admin.bundles.create.post');
+    Route::post('create/bundle', 'BundlesController@createPost')->name('admin.bundles.create.post');
     Route::get('bundles/{id}', 'BundlesController@Bundle')->name('admin.bundles.view');
     Route::get('bundles/{id}/delete', 'BundlesController@BundleDelete')->name('admin.bundles.delete');
     Route::get('products', 'ProductsController@index')->name('admin.products');

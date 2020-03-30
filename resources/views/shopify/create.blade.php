@@ -1,6 +1,6 @@
 @extends('layout.shopify')
 @section('content')
-    <form action="{{ route('admin.bundles.create.post') }}" method="GET">
+    <form action="{{ route('admin.bundles.create.post') }}" method="POST">
 <div class="Polaris-Page-Header Polaris-Page-Header--hasNavigation Polaris-Page-Header--hasActionMenu Polaris-Page-Header--mobileView">
     <div class="Polaris-Page-Header__MainContent">
         <div class="Polaris-Page-Header__TitleActionMenuWrapper">
