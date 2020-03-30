@@ -102,7 +102,7 @@
                     </div>
                     <div class="Polaris-Stack__Item">
                         <div class="Polaris-ButtonGroup Polaris-ButtonGroup--segmented" data-buttongroup-segmented="true">
-                            <div class="Polaris-ButtonGroup__Item"><a target="_blank" href="https://{{ $shop->shopify_domain }}/admin/products/{{ $bundle->product_id }}" class="Polaris-Button"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text">Preview</span></span></a></div>
+                            <div class="Polaris-ButtonGroup__Item"><a target="_blank" href="https://{{ $shop->name }}/admin/products/{{ $bundle->product_id }}" class="Polaris-Button"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text">Preview</span></span></a></div>
                             <div class="Polaris-ButtonGroup__Item"><a href="{{ route('admin.bundles.view', $bundle->id) }}" class="Polaris-Button"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text">View/Edit</span></span></a></div>
                             <div class="Polaris-ButtonGroup__Item"><a href="{{ route('admin.bundles.delete', $bundle->id) }}" class="Polaris-Button"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text">Delete</span></span></a></div>
                         </div>

@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 text-right">
-                            <a target="_blank" href="https://{{ $shop->shopify_domain }}/admin/products/{{ $bundle->product_id }}" class="Polaris-Button Polaris-Button--primary">
+                            <a target="_blank" href="https://{{ $shop->name }}/admin/products/{{ $bundle->product_id }}" class="Polaris-Button Polaris-Button--primary">
                                     <span class="Polaris-Button__Content">
                                         <span class="Polaris-Button__Text" style="color: white;">Preview</span>
                              </span>
