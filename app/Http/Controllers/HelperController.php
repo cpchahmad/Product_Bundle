@@ -27,7 +27,6 @@ class HelperController extends Controller
         $this->api->setVersion(env('SHOPIFY_API_VERSION'));
         $this->api->setShop($this->getShop()->name);
         $this->api->setAccessToken($this->getShop()->password);
-        dd($this->api);
         return $this->api;
     }
 }
