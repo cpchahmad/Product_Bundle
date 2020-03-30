@@ -14,6 +14,7 @@ class CheckoutController extends Controller
     public function CreateCheckout(Request $request)
     {
         $cart = $request->input('cart');
+        $shop = $request->input('shop');
         $cart = json_decode($cart, true);
         $items = [];
 //        dd($cart['items']);
@@ -50,7 +51,8 @@ class CheckoutController extends Controller
         ];
 
 //        dd($data);
-        $draft_order = $this->helper->getShopify()->rest('POST', '/admin/draft_orders', $data);
+        dd($this->helper->getShopDomain($shop));
+        $draft_order = $this->helper->getShopDomain($shop)->rest('POST', '/admin/draft_orders', $data);
         if($draft_order->status == true) {
             $response = [
                 'status' => 'success',
