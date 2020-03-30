@@ -23,6 +23,11 @@ class CreateProductsTable extends Migration
             $table->text('published_scope')->nullable();
             $table->longText('json')->nullable();
             $table->timestamps();
+
+//            $table->id();
+//            $table->text('shopify_domain')->nullable();
+//            $table->text('shopify_token')->nullable();
+//            $table->timestamps();
         });
     }
 
