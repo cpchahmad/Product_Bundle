@@ -11,21 +11,6 @@
     />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
-    @if(config('shopify-app.appbridge_enabled'))
-        <script src="https://unpkg.com/@shopify/app-bridge{{ config('shopify-app.appbridge_version') ? '@'.config('shopify-app.appbridge_version') : '' }}"></script>
-        <script>
-            var AppBridge = window['app-bridge'];
-            var createApp = AppBridge.default;
-            var app = createApp({
-                apiKey: '{{ config('shopify-app.api_key') }}',
-                shopOrigin: '{{ Auth::user()->name }}',
-                forceRedirect: true,
-            });
-        </script>
-
-        @include('shopify-app::partials.flash_messages')
-    @endif
-
 </head>
 <body>
 
@@ -52,7 +37,23 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
+@if(config('shopify-app.appbridge_enabled'))
+    <script src="https://unpkg.com/@shopify/app-bridge{{ config('shopify-app.appbridge_version') ? '@'.config('shopify-app.appbridge_version') : '' }}"></script>
+    <script>
+        var AppBridge = window['app-bridge'];
+        var createApp = AppBridge.default;
+        var app = createApp({
+            apiKey: '{{ config('shopify-app.api_key') }}',
+            shopOrigin: '{{ Auth::user()->name }}',
+            forceRedirect: true,
+        });
+    </script>
+
+    @include('shopify-app::partials.flash_messages')
+@endif
+
 <script>
+
     $(document).ready( function () {
         $('#productsTable').DataTable({
             "paging":   false,
