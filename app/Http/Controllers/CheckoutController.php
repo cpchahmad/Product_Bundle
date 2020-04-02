@@ -18,15 +18,16 @@ class CheckoutController extends Controller
         $cart = json_decode($cart, true);
         $items = [];
 //        dd($cart['items']);
-        foreach ($cart['items'] as $item){
+        foreach ($cart['items'] as $item) {
             array_push($items, [
                 'variant_id' => $item['id'],
                 'quantity' => $item['quantity']
             ]);
-            foreach ($item['properties'] as $index=>$property){
-                if(strpos($index, 'product') !== false) {
+            if(isset($item['properties'])){
+            foreach ($item['properties'] as $index => $property) {
+                if (strpos($index, 'product') !== false) {
                     $selected = ProductVariant::where('variant_id', $property)->first();
-                    if($selected) {
+                    if ($selected) {
                         $price = $selected->price * $item['quantity'];
                         array_push($items, [
                             'variant_id' => $property,
@@ -42,6 +43,7 @@ class CheckoutController extends Controller
                     }
                 }
             }
+        }
         }
 
         $data = [
