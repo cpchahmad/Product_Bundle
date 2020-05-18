@@ -95,33 +95,68 @@ class GiftController extends Controller
         DB::table('gift_product')->where('gift_id',$id)->delete();
         return redirect( route('gifts.list'));
     }
-
-
-    public function cart(){
-
-        $gifts = Gift::where('active',1)->orderByDesc('triggered_amount')->get();
+    
+    
+    public function cart(Request $request){
+        // dd($request->total_items);
+            $ids = [];
+            $sum = 0;
+            foreach ($request->cart['items'] as $item) {
+                array_push($ids,$item['id']);
+                $sum+= $item['final_price']*$item['quantity']; 
+            }
+        $total_price_original = $sum / 100 ;
+        $gifts = Gift::where('active',1)->orderBy('triggered_amount')->get();
         $price = Gift::get()->min('triggered_amount');
-        $cartTotal =  71;
+        $cartTotal =  $total_price_original;
         $products = [];
+
         if($cartTotal <= $price){
             $data = array(
                 'gift'=>'false',
                 'products'=> $products
             );
-            return  view('shopify.cart')->with($data);
-
+            return $data;
         }else{
+            $new_array= [];
         for ($i = 0; $i < count($gifts); $i++) {
             if($cartTotal > $gifts[$i]->triggered_amount ){
-                $data = array(
-                    'gift'=>'true',
-                    'products'=> $gifts[$i]->products
-                );
-                return  view('shopify.cart')->with($data);
+                array_push($new_array,$gifts[$i]->products[0]);
             }
-            
         }
+        // dd($new_array);
+        $data = array(
+            'gift'=>'true',
+            'products'=> $new_array
+        );
+        return $data;
       }
+       
+        
+        //Cart With View
+    //     $gifts = Gift::where('active',1)->orderByDesc('triggered_amount')->get();
+    //     $price = Gift::get()->min('triggered_amount');
+    //     $cartTotal =  100;
+    //     $products = [];
+    //     if($cartTotal <= $price){
+    //         $data = array(
+    //             'gift'=>'false',
+    //             'products'=> $products
+    //         );
+    //         return  view('shopify.cart')->with($data);
+
+    //     }else{
+    //     for ($i = 0; $i < count($gifts); $i++) {
+    //         if($cartTotal > $gifts[$i]->triggered_amount ){
+    //             $data = array(
+    //                 'gift'=>'true',
+    //                 'products'=> $gifts[$i]->products
+    //             );
+    //             return  view('shopify.cart')->with($data);
+    //         }
+            
+    //     }
+    //   }
     }
 
     public function multipleProductCart(){
