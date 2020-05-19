@@ -176,7 +176,12 @@ input[type=checkbox], input[type=radio] {
 .gift-popup .woo_gift_data .variations {
     display: inline-flex;
     /* table-layout: fixed; */
-    /* width: 100%; */
+    width: 90%;
+}
+.gift-popup .woo_gift_data .variants {
+    display: inline-flex;
+    /* table-layout: fixed; */
+    /* width: 90%; */
 }
 .gift-popup .woo_gift_data div.label, .gift-popup .woo_gift_data div.value {
     display: inline-block;
@@ -267,7 +272,9 @@ input[type=checkbox], input[type=radio] {
                           </td>
                           <td class="woo_gift_data">
                               <h3 class="gift-title">
-                                  <a href="#"><span>Instant Cooling </span><b>Towel</b></a></h3>
+                                  <a href="#"><span>Instant Cooling </span><b>Towel</b></a>
+                                </h3>
+                                <div class="variants">
                                   <div class="woo_gift_item_cart_content variations_form" >
                                               <div class="variations variations_one">
                                                   <div class="label pa_color_label">
@@ -288,6 +295,29 @@ input[type=checkbox], input[type=radio] {
                                       </div>
                                   </div>
                               </div>
+
+                              <div class="woo_gift_item_cart_content variations_form" >
+                                <div class="variations variations_one">
+                                    <div class="label pa_color_label">
+                                        <label ><b>Color:</b></label>
+                                    </div>
+                                    <div class="value pa_color_value">
+                                    <select  class="woo_gift_select_variables form-control" id="pa_color_10" name="woo_gift_attribute_pa_color_10" >
+                                    <option class="display-none" value="">Add Color</option>
+                                    <option value="cabana-green-midnight-navy" class="attached enabled">Cabana Green/ Midnight Navy</option>
+                                    <option value="pink-punch-storm-grey" class="attached enabled">Pink Punch/Storm Grey</option>
+                                    <option value="polarblue-coolblack" class="attached enabled">Polar Blue/Cool Black</option>
+                                    <option value="storm-grey-cool-black" class="attached enabled">Storm Grey / Cool Black</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="single_variation_wrap"><div class="single_variation woo_gift_item_cart_details" style="display: none;">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
                           </td>
                     </tr>    
                     <tr class="product woo_gift_row woo_product_variable woo_pv_disabled">

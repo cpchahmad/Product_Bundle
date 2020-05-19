@@ -44,6 +44,7 @@
                                    
                                           <tbody>
                                             @forelse ($products as $product)
+                                            
                                             <tr class="Polaris-DataTable__TableRow">
                                               <th class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop">
                                                   <div class="row polaris_checkbox">
@@ -58,6 +59,7 @@
                                                           <span class="Polaris-Thumbnail Polaris-Thumbnail--sizeSmall"><img src="{{$product->image}}" alt="Responsive Image" class="Polaris-Thumbnail__Image"></span>
                                                           <span class="Polaris-Choice__Label" style="margin-left: 5px;display: inline-block">
                                                             {{$product->title}}
+                                                            {{-- <p>{{$product->variants}}</p> --}}
                                                               <br>
                                                                 <p>
                                                                   <span class="Polaris-Badge Polaris-Badge--statusSuccess"><span class="Polaris-VisuallyHidden">Success</span><span class="Polaris-Badge__Content">Available</span></span>

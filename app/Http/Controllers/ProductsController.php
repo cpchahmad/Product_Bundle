@@ -29,7 +29,10 @@ class ProductsController extends Controller
         $products = $this->helper->getShopify()->rest('GET', '/admin/products.json', [
             'limit' => 250
         ]);
-
+        
+        // foreach ($products->body->products as $product) {
+        //     dd($product->options[1]->values);    
+        // }
         if($products->errors){
             return response()->json([
                 'status' => 'error',
