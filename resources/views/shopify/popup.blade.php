@@ -239,8 +239,8 @@ input[type=checkbox], input[type=radio] {
 
 
 <!-- Trigger/Open The Modal -->
-
-
+<form action="{{ route('giftpop.store')}}" method="POST" >
+@csrf
 <!-- The Modal -->
 <div class="gift">
 <div id="myGiftModal" class="modal">
@@ -281,7 +281,7 @@ input[type=checkbox], input[type=radio] {
                                                       <label ><b>Color:</b></label>
                                                   </div>
                                                   <div class="value pa_color_value">
-                                                  <select  class="woo_gift_select_variables form-control" id="pa_color_10" name="woo_gift_attribute_pa_color_10" >
+                                                  <select  class="woo_gift_select_variables form-control" id="color" name="color1" >
                                                   <option class="display-none" value="">Add Color</option>
                                                   <option value="cabana-green-midnight-navy" class="attached enabled">Cabana Green/ Midnight Navy</option>
                                                   <option value="pink-punch-storm-grey" class="attached enabled">Pink Punch/Storm Grey</option>
@@ -302,7 +302,7 @@ input[type=checkbox], input[type=radio] {
                                         <label ><b>Color:</b></label>
                                     </div>
                                     <div class="value pa_color_value">
-                                    <select  class="woo_gift_select_variables form-control" id="pa_color_10" name="woo_gift_attribute_pa_color_10" >
+                                    <select  class="woo_gift_select_variables form-control" id="pa_color2" name="color2" >
                                     <option class="display-none" value="">Add Color</option>
                                     <option value="cabana-green-midnight-navy" class="attached enabled">Cabana Green/ Midnight Navy</option>
                                     <option value="pink-punch-storm-grey" class="attached enabled">Pink Punch/Storm Grey</option>
@@ -341,7 +341,7 @@ input[type=checkbox], input[type=radio] {
                                                       <label for="pa_color"><b>Color:</b></label>
                                                   </div>
                                                   <div class="value pa_color_value">
-                                                  <select  class="woo_gift_select_variables form-control" id="pa_color_10" name="woo_gift_attribute_pa_color_10" >
+                                                  <select  class="woo_gift_select_variables form-control" id="pa_color" name="color3" >
                                                   <option class="display-none" value="">Add Color</option>
                                                   <option value="cabana-green-midnight-navy" class="attached enabled">Cabana Green/ Midnight Navy</option>
                                                   <option value="pink-punch-storm-grey" class="attached enabled">Pink Punch/Storm Grey</option>
@@ -350,10 +350,11 @@ input[type=checkbox], input[type=radio] {
                                               </select>
                                           </div>
                                       </div>
-                                      <div class="single_variation_wrap"><div class="single_variation woo_gift_item_cart_details" style="display: none;">
+                                      {{-- <div class="single_variation_wrap">
+                                          <div class="single_variation woo_gift_item_cart_details" style="display: none;">
 
                                       </div>
-                                  </div>
+                                  </div> --}}
                               </div>
                           </td>
                     </tr>    
@@ -370,7 +371,7 @@ input[type=checkbox], input[type=radio] {
           </p>
       </span>
       <span class="gift-actions-right">
-          <button type="button"  class="btn " disabled="">ADD ITEM</button>
+          <button type="submit"  class="btn " >ADD ITEM</button>
       </span>
   </div>
  
@@ -384,7 +385,7 @@ input[type=checkbox], input[type=radio] {
 
 </div>
 </div>
-
+</form>
 <script>
 
     jQuery(function($){

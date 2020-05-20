@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\OptionValue;
+use App\ProductOption;
 use App\ProductVariant;
+use PHPUnit\TextUI\Help;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PHPUnit\TextUI\Help;
 
 
 class ProductsController extends Controller
 {
     public $helper;
+    
     public function __construct() {
         $this->helper = new HelperController();
     }
@@ -29,9 +32,9 @@ class ProductsController extends Controller
         $products = $this->helper->getShopify()->rest('GET', '/admin/products.json', [
             'limit' => 250
         ]);
-        
+            // dd($products->body->products[2]->variants); 
         // foreach ($products->body->products as $product) {
-        //     dd($product->options[1]->values);    
+        //     dd($product);    
         // }
         if($products->errors){
             return response()->json([
@@ -71,6 +74,9 @@ class ProductsController extends Controller
                     $new_variant->price= $variant->price;
                     $new_variant->shopify_id = $product->id;
                     $new_variant->product_id = $db_product->id;
+                    $new_variant->option1 = $variant->option1;
+                    $new_variant->option2 = $variant->option2;
+                    $new_variant->option3 = $variant->option3;
                     $new_variant->save();
 
                     array_push($variants_array, $new_variant->id);
@@ -78,6 +84,44 @@ class ProductsController extends Controller
 
                 ProductVariant::where('product_id', $db_product->id)
                     ->whereNotIn('id', $variants_array)
+                    ->delete();
+
+                $options_array = [];
+                foreach ($product->options as $option){
+                    $new_option = ProductOption::where([
+                        'option_id' => $option->id,
+                        'product_id' => $db_product->id,
+                        'shopify_id' => $product->id
+                    ])->first();
+                    if($new_option === null){
+                        $new_option = new ProductOption();
+                    }
+                    $new_option->option_id = $option->id;
+                    $new_option->name= $option->name;
+                    $new_option->shopify_id = $product->id;
+                    $new_option->product_id = $db_product->id;
+                    $new_option->save();
+
+                    array_push($options_array, $new_option->id);
+
+                    foreach ($option->values as $value) {
+                        $new_value = OptionValue::where([
+                            'product_option_id' => $db_product->id,
+                            'option_database_id' => $new_option->id,
+                            'value'=> $value
+                        ])->first();
+                        if($new_value === null){
+                            $new_value = new OptionValue();
+                        }
+                        $new_value->product_option_id = $db_product->id;
+                        $new_value->option_database_id = $new_option->id;
+                        $new_value->value = $value;
+                        $new_value->save();
+                    }
+                }
+
+                ProductOption::where('product_id', $db_product->id)
+                    ->whereNotIn('id', $options_array)
                     ->delete();
             }
 

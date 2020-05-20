@@ -14,4 +14,8 @@ class Product extends Model
         return $this->hasMany('App\ProductVariant');
     }
 
+    public function options(){
+        return $this->hasMany('App\ProductOption');
+    }
+
 }

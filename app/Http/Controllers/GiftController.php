@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Gift;
 use App\Bundle;
 use App\Product;
+use App\OptionValue;
 use App\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class GiftController extends Controller
 {
+    protected $giftIds;
     public $helper;
     public function __construct() {
         $this->helper = new HelperController();
@@ -51,6 +53,9 @@ class GiftController extends Controller
         return redirect(route('gift.edit',$gift_add->id));
 
 
+    }
+    public function storepop(Request $request){
+        dd($request->all());
     }
 
     public function giftupdate(Request $request , $id){
@@ -113,20 +118,29 @@ class GiftController extends Controller
             foreach ($request->cart['items'] as $item) {
                 array_push($ids,$item['product_id']);
             }
+            // dd($ids);
            $bundles =  Bundle::all();
            foreach ($bundles as $bd) {
                array_push($bids,$bd->product_id);
            }
+        //    dd($bids);
+        //    $matching = [];
            $matching = array_intersect($ids,$bids);
+        //    dd($matching);
            $items = $request->cart['items'];
            foreach ($request->cart['items'] as $item) {
+               if($matching){
             for($i=0 ; $i < count($matching);$i++){
                 if(($matching[$i] !== $item['product_id'])){
                     $sum+= $item['final_price']*$item['quantity'];
                 }
-            }     
+            }
+        }else{
+            $sum+= $item['final_price']*$item['quantity'];
+
+        }     
         }
-       
+    //    dd($sum);
         $total_price_original = $sum / 100 ;
         $gifts = Gift::where('active',1)->orderBy('triggered_amount')->get();
         $price = Gift::get()->min('triggered_amount');
@@ -140,12 +154,36 @@ class GiftController extends Controller
             );
             return $data;
         }else{
+            $this->giftIds = [];
             $new_array= [];
             $variants=[];
+            $option1=[];
+            $option2=[];
+            $options=[];
         for ($i = 0; $i < count($gifts); $i++) {
             if($cartTotal > $gifts[$i]->triggered_amount ){
                 array_push($new_array,$gifts[$i]->products[0]);
                 array_push($variants,$gifts[$i]->products[0]->variants);
+                array_push($options,$gifts[$i]->products[0]->options);
+                array_push($this->giftIds,$gifts[$i]->products[0]->id);
+
+                // array_push($options,$gifts[$i]->products[0]->options[0]->id);
+                // dd(count($gifts[$i]->products[0]->options));
+                // array_push($option1,$gifts[$i]->products[0]->id);
+                // $id = $option1,$gifts[$i]->products[0]->id ;
+                $opt1 = OptionValue::where('product_option_id',$gifts[$i]->products[0]->id)->where('option_database_id',$gifts[$i]->products[0]->options[0]->id)->get();
+                if(count($gifts[$i]->products[0]->options)>1){
+                    
+                $opt2 = OptionValue::where('product_option_id',$gifts[$i]->products[0]->id)->where('option_database_id',$gifts[$i]->products[0]->options[1]->id)->get();
+                array_push($option2,$opt2);
+                }
+                // else{
+                //     $opt3 = [];
+                //     array_push($option2,$opt3);
+                // }
+                // for($j=0; $j < count($gifts[$i]->products[0]->options); $j++){
+                array_push($option1,$opt1);
+            // }
             }
         }
         // $variantids = [];
@@ -157,9 +195,14 @@ class GiftController extends Controller
         $data = array(
             'gift'=>'true',
             'products'=> $new_array,
-            'variants' => $variants
+            'variants' => $variants,
+            'option1' => $option1,
+            'option2' => $option2,
+            'options'=>$options,
+            'giftIds'=>$this->giftIds
+
         );
-        // dd($data['products'][0]['variants']);
+        // dd($data['products'][0]['options'][0]['values']);
         
         return $data;
       }
@@ -195,8 +238,26 @@ class GiftController extends Controller
 
 
     public function variants(Request $request){
-        $variants = ProductVariant::where('product_id', $request->id)->get();
-        return $variants;
+        
+      
+        $arr = [];
+        for($j=0;$j<count($request->products);$j++){
+        for($i=0;$i<count($request->products[$j]['variants']);$i++){
+           
+                if($request->products[$j]['variants'][$i]['option1'] == $request->gifts[$j][0] && $request->products[$j]['variants'][$i]['option2'] == $request->gifts[$j][1] ){
+                    array_push($arr,$request->products[$j]['variants'][$i]['variant_id']);
+                }
+               
+        }
+        
+    }
+        return $arr;
+
+        // return $this->giftIds;
+        // $gifts = Gift::where('id',$this->giftIds[0])->get();
+        // return $gifts;
+        // $variants = ProductVariant::where('product_id', $request->id)->get();
+        // return $variants;
     }
     public function multipleProductCart(){
 
