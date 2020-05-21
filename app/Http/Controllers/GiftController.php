@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class GiftController extends Controller
 {
-    protected $giftIds;
     public $helper;
     public function __construct() {
         $this->helper = new HelperController();
@@ -102,10 +101,31 @@ class GiftController extends Controller
         DB::table('gift_product')->where('gift_id',$id)->delete();
         return redirect( route('gifts.list'));
     }
-    // public function cartGift(){
-    //     return 1;
-    //     die;
-    // }
+    public function cartGift(){
+
+        $myObj = [];
+        $myObj[0]['name'] = "John";
+        $myObj[1]['id'] = 123;
+        
+        $myJSON = json_encode($myObj);
+        
+        $arr = [
+            $myJSON
+        ];
+        dd( $arr);
+
+        // $newarr = [];
+        // $newarr[0] = array(
+        //     'quantity'=>1,
+        //     'id'=>3
+        // );
+        // $newarr[1] = array(
+        //     'quantity'=>1,
+        //     'id'=>3
+        // );
+        
+        // dd($newarr);
+    }
 
 
     
@@ -118,15 +138,11 @@ class GiftController extends Controller
             foreach ($request->cart['items'] as $item) {
                 array_push($ids,$item['product_id']);
             }
-            // dd($ids);
            $bundles =  Bundle::all();
            foreach ($bundles as $bd) {
                array_push($bids,$bd->product_id);
            }
-        //    dd($bids);
-        //    $matching = [];
            $matching = array_intersect($ids,$bids);
-        //    dd($matching);
            $items = $request->cart['items'];
            foreach ($request->cart['items'] as $item) {
                if($matching){
@@ -137,16 +153,13 @@ class GiftController extends Controller
             }
         }else{
             $sum+= $item['final_price']*$item['quantity'];
-
         }     
         }
-    //    dd($sum);
         $total_price_original = $sum / 100 ;
         $gifts = Gift::where('active',1)->orderBy('triggered_amount')->get();
         $price = Gift::get()->min('triggered_amount');
         $cartTotal =  $total_price_original;
         $products = [];
-
         if($cartTotal <= $price){
             $data = array(
                 'gift'=>'false',
@@ -154,7 +167,6 @@ class GiftController extends Controller
             );
             return $data;
         }else{
-            $this->giftIds = [];
             $new_array= [];
             $variants=[];
             $option1=[];
@@ -165,33 +177,14 @@ class GiftController extends Controller
                 array_push($new_array,$gifts[$i]->products[0]);
                 array_push($variants,$gifts[$i]->products[0]->variants);
                 array_push($options,$gifts[$i]->products[0]->options);
-                array_push($this->giftIds,$gifts[$i]->products[0]->id);
-
-                // array_push($options,$gifts[$i]->products[0]->options[0]->id);
-                // dd(count($gifts[$i]->products[0]->options));
-                // array_push($option1,$gifts[$i]->products[0]->id);
-                // $id = $option1,$gifts[$i]->products[0]->id ;
                 $opt1 = OptionValue::where('product_option_id',$gifts[$i]->products[0]->id)->where('option_database_id',$gifts[$i]->products[0]->options[0]->id)->get();
                 if(count($gifts[$i]->products[0]->options)>1){
-                    
                 $opt2 = OptionValue::where('product_option_id',$gifts[$i]->products[0]->id)->where('option_database_id',$gifts[$i]->products[0]->options[1]->id)->get();
                 array_push($option2,$opt2);
                 }
-                // else{
-                //     $opt3 = [];
-                //     array_push($option2,$opt3);
-                // }
-                // for($j=0; $j < count($gifts[$i]->products[0]->options); $j++){
                 array_push($option1,$opt1);
-            // }
             }
         }
-        // $variantids = [];
-        // foreach ($new_array as $na) {
-        //     array_push($variantids,$na->id);
-        // }
-        // $variants = ProductVariant::whereIn('product_id', $variantids)->get();
-        // dd($variants);
         $data = array(
             'gift'=>'true',
             'products'=> $new_array,
@@ -199,17 +192,10 @@ class GiftController extends Controller
             'option1' => $option1,
             'option2' => $option2,
             'options'=>$options,
-            'giftIds'=>$this->giftIds
-
+            
         );
-        // dd($data['products'][0]['options'][0]['values']);
-        
         return $data;
-      }
-
-      
-       
-        
+      } 
         //Cart With View
     //     $gifts = Gift::where('active',1)->orderByDesc('triggered_amount')->get();
     //     $price = Gift::get()->min('triggered_amount');
@@ -238,20 +224,45 @@ class GiftController extends Controller
 
 
     public function variants(Request $request){
-        
-      
         $arr = [];
         for($j=0;$j<count($request->products);$j++){
         for($i=0;$i<count($request->products[$j]['variants']);$i++){
            
-                if($request->products[$j]['variants'][$i]['option1'] == $request->gifts[$j][0] && $request->products[$j]['variants'][$i]['option2'] == $request->gifts[$j][1] ){
-                    array_push($arr,$request->products[$j]['variants'][$i]['variant_id']);
+                if($request->products[$j]['variants'][$i]['option1'] == $request->gifts[$j][0]){
+                    if(count($request->gifts[$j])>1){
+                        if($request->products[$j]['variants'][$i]['option2'] == $request->gifts[$j][1]){
+                            array_push($arr,$request->products[$j]['variants'][$i]['variant_id']);
+                        }
+                    }else{
+                        array_push($arr,$request->products[$j]['variants'][$i]['variant_id']);
+                    }
                 }
-               
         }
         
     }
         return $arr;
+        // $myObj = [];
+        // for($k=0;$k<count($arr);$k++){
+        // $myObj[$k]['quantity'] = 1;
+        // $myObj[$k]['id'] = $arr[$k] ;
+        // }
+        // $myJSON = json_encode($myObj);
+        // dd($myJSON);
+
+    //     $arrz = [];
+    //     $newarr = [];
+    //     for($k = 0; $k < count($arr);$k++){
+    //     $newarr[] =  
+    //         [
+    //             'quantity'=>1,
+    //             'id'=>$arr[$k]
+    //         ]
+    //   ;
+    // }
+      
+    //     dd($newarr);
+        
+
 
         // return $this->giftIds;
         // $gifts = Gift::where('id',$this->giftIds[0])->get();
