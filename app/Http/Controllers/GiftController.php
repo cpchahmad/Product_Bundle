@@ -178,9 +178,14 @@ class GiftController extends Controller
                 array_push($variants,$gifts[$i]->products[0]->variants);
                 array_push($options,$gifts[$i]->products[0]->options);
                 $opt1 = OptionValue::where('product_option_id',$gifts[$i]->products[0]->id)->where('option_database_id',$gifts[$i]->products[0]->options[0]->id)->get();
+                if(count($gifts[$i]->products[0]->options) == 1){
+                    $opt = [];
+                    array_push($option2,null);
+                }
                 if(count($gifts[$i]->products[0]->options)>1){
                 $opt2 = OptionValue::where('product_option_id',$gifts[$i]->products[0]->id)->where('option_database_id',$gifts[$i]->products[0]->options[1]->id)->get();
                 array_push($option2,$opt2);
+                
                 }
                 array_push($option1,$opt1);
             }
@@ -224,12 +229,15 @@ class GiftController extends Controller
 
 
     public function variants(Request $request){
+        // dd($request);
+        // dd($request->gifts[4][1]);
         $arr = [];
         for($j=0;$j<count($request->products);$j++){
         for($i=0;$i<count($request->products[$j]['variants']);$i++){
            
                 if($request->products[$j]['variants'][$i]['option1'] == $request->gifts[$j][0]){
-                    if(count($request->gifts[$j])>1){
+                    // dd($request->gifts[$j][1]);
+                    if($request->gifts[$j][1] !== "Hidden"){
                         if($request->products[$j]['variants'][$i]['option2'] == $request->gifts[$j][1]){
                             array_push($arr,$request->products[$j]['variants'][$i]['variant_id']);
                         }
