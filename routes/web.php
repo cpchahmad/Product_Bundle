@@ -25,8 +25,7 @@ Route::get('/', 'BundlesController@index')->name('home');
     Route::patch('updateStatus/{gift}','GiftController@giftStateUpdate')->name('gift.state.update');
     Route::get('gifts','GiftController@gifts')->name('gifts.list');
     Route::delete('gifts/delete/{id}', 'GiftController@destroy')->name('gift.destroy');
-    Route::post('cart','GiftController@cart')->name('gift.cart');
-    Route::post('variants','GiftController@variants');
+
     Route::get('cartGift','GiftController@cartGift')->name('gift.cartgift');
     Route::get('multipleProductCart','GiftController@multipleProductCart')->name('gift.multipleProductCart');
     Route::get('dashboard', 'BundlesController@index')->name('admin.dashboard');
@@ -40,5 +39,6 @@ Route::get('/', 'BundlesController@index')->name('home');
 });
 
 Route::any('checkout', 'CheckoutController@CreateCheckout')->name('create.checkout');
-
+Route::post('/cart','GiftController@cart')->name('gift.cart');
 Route::get('/popup','GiftController@popup');
+Route::post('variants','GiftController@variants');
