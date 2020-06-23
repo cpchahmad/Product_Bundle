@@ -27,3 +27,4 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth.shopify']], function()
 });
 
 Route::any('checkout', 'CheckoutController@CreateCheckout')->name('create.checkout');
+

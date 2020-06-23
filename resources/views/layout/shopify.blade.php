@@ -48,7 +48,6 @@
             forceRedirect: true,
         });
     </script>
-
     @include('shopify-app::partials.flash_messages')
 @endif
 
