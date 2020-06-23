@@ -1,0 +1,39 @@
+.modal .modal-dialog {
+  max-width: 650px;
+}
+
+.Polaris-Choice {
+  margin-left: 2rem;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover {
+  color: #fff;
+}
+
+td .row a {
+  color: #212b36;
+}
+
+td .row a:hover {
+  color: #212b36;
+}
+
+.Polaris-ButtonGroup--segmented {
+  float: right;
+}
+
+.Polaris-ButtonGroup--segmented .Polaris-ButtonGroup__Item a {
+  color: #212b36;
+}
+
+.Polaris-ButtonGroup--segmented .Polaris-ButtonGroup__Item a:hover {
+  color: #212b36;
+  text-decoration: none;
+}
+

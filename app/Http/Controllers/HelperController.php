@@ -13,7 +13,8 @@ class HelperController extends Controller
 
 
     public function getShop(){
-        $shop = Auth::user()->name;
+        // $shop = Auth::user()->name;
+        $shop = 'arctic-cool-store.myshopify.com';
         return User::where('name', $shop)->first();
     }
 

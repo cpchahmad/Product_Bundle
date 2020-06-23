@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductVariantsTable extends Migration
+class CreateProductOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateProductVariantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_variants', function (Blueprint $table) {
+        Schema::create('product_options', function (Blueprint $table) {
             $table->id();
-            $table->text('variant_id')->nullable();
-            $table->text('price')->nullable();
+            $table->text('option_id')->nullable();
             $table->text('shopify_id')->nullable();
             $table->bigInteger('product_id')->unsigned()->nullable();
-            $table->text('option1')->nullable();
-            $table->text('option2')->nullable();
-            $table->text('option3')->nullable();
+            $table->text('name')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreateProductVariantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_variants');
+        Schema::dropIfExists('product_options');
     }
 }
