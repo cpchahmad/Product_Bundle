@@ -73,26 +73,26 @@ class GiftController extends Controller
             ->update(['product_id' => $request->product]);
 
         return redirect( route('gifts.list'));
-        
+
 
     }
     public function giftStateUpdate(Request $request , $id){
-        
+
         Gift::where('id','=',$id)->update(['active' => $request->active]);
-        
+
 
         return redirect( route('gifts.list'));
-        
+
 
     }
     public function gifts(){
         $gifts = Gift::all();
         $data= array(
-            'gifts'=>$gifts
+            'gifts' => $gifts
         );
         return view('shopify.giftsGrid')->with($data);
     }
-    
+
     public function destroy($id)
     {
         $gift = Gift::find($id);
@@ -106,9 +106,9 @@ class GiftController extends Controller
         $myObj = [];
         $myObj[0]['name'] = "John";
         $myObj[1]['id'] = 123;
-        
+
         $myJSON = json_encode($myObj);
-        
+
         $arr = [
             $myJSON
         ];
@@ -123,15 +123,15 @@ class GiftController extends Controller
         //     'quantity'=>1,
         //     'id'=>3
         // );
-        
+
         // dd($newarr);
     }
 
 
-    
-    
+
+
     public function cart(Request $request){
-        
+
             $ids = [];
             $bids = [];
             $sum = 0;
@@ -153,7 +153,7 @@ class GiftController extends Controller
             }
         }else{
             $sum+= $item['final_price']*$item['quantity'];
-        }     
+        }
         }
         $total_price_original = $sum / 100 ;
         $gifts = Gift::where('active',1)->orderBy('triggered_amount')->get();
@@ -185,7 +185,7 @@ class GiftController extends Controller
                 if(count($gifts[$i]->products[0]->options)>1){
                 $opt2 = OptionValue::where('product_option_id',$gifts[$i]->products[0]->id)->where('option_database_id',$gifts[$i]->products[0]->options[1]->id)->get();
                 array_push($option2,$opt2);
-                
+
                 }
                 array_push($option1,$opt1);
             }
@@ -197,10 +197,10 @@ class GiftController extends Controller
             'option1' => $option1,
             'option2' => $option2,
             'options'=>$options,
-            
+
         );
         return $data;
-      } 
+      }
         //Cart With View
     //     $gifts = Gift::where('active',1)->orderByDesc('triggered_amount')->get();
     //     $price = Gift::get()->min('triggered_amount');
@@ -222,7 +222,7 @@ class GiftController extends Controller
     //             );
     //             return  view('shopify.cart')->with($data);
     //         }
-            
+
     //     }
     //   }
     }
@@ -234,7 +234,7 @@ class GiftController extends Controller
         $arr = [];
         for($j=0;$j<count($request->products);$j++){
         for($i=0;$i<count($request->products[$j]['variants']);$i++){
-           
+
                 if($request->products[$j]['variants'][$i]['option1'] == $request->gifts[$j][0]){
                     // dd($request->gifts[$j][1]);
                     if($request->gifts[$j][1] !== "Hidden"){
@@ -246,7 +246,7 @@ class GiftController extends Controller
                     }
                 }
         }
-        
+
     }
         return $arr;
         // $myObj = [];
@@ -260,16 +260,16 @@ class GiftController extends Controller
     //     $arrz = [];
     //     $newarr = [];
     //     for($k = 0; $k < count($arr);$k++){
-    //     $newarr[] =  
+    //     $newarr[] =
     //         [
     //             'quantity'=>1,
     //             'id'=>$arr[$k]
     //         ]
     //   ;
     // }
-      
+
     //     dd($newarr);
-        
+
 
 
         // return $this->giftIds;
@@ -306,11 +306,11 @@ class GiftController extends Controller
         foreach ($data['products'] as $pd) {
             dd($pd['variants']);
         }
-        
+
         // return  view('shopify.cart')->with($data);
       }
-      
-      
+
+
     }
 
     public function popup(){
@@ -340,13 +340,13 @@ class GiftController extends Controller
         );
         return  view('shopify.popup')->with($data);
       }
-      
-      
+
+
     }
 
 
 
 
-    
-    
+
+
 }

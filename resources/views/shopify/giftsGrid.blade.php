@@ -12,7 +12,7 @@
                   <div class="col-md-6">
               <div class="Polaris-Header-Title__TitleAndSubtitleWrapper">
                   <div class="Polaris-Header-Title">
-                      <h1 class="Polaris-DisplayText Polaris-DisplayText--sizeLarge">Gifts Collection</h1>
+                      <h1 class="Polaris-DisplayText Polaris-DisplayText--sizeLarge">Free Gifts</h1>
                   </div>
               </div>
                   </div>
@@ -54,27 +54,26 @@
                       <th data-polaris-header-cell="true" class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--header Polaris-DataTable__Cell--header" scope="col">Status</th>
                       <th data-polaris-header-cell="true" class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--header Polaris-DataTable__Cell--header" scope="col"></th>
                     </tr>
-                    
+
                   </thead>
                   <tbody>
                       @foreach ($gifts as $gift)
-                          
-                      
+
                     <tr class="Polaris-DataTable__TableRow">
                      <!-- <td class="Polaris-Thumbnail Polaris-Thumbnail--sizeSmall"style="--top-bar-background:#00848e; --top-bar-background-lighter:#1d9ba4; --top-bar-color:#f9fafb; --p-frame-offset:0px;"><img src="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg" alt="Black choker necklace" class="Polaris-Thumbnail__Image"></td> -->
                      <td class="Polaris-DataTable__Cell  Polaris-DataTable__Cell--firstColumn " scope="row"><img src="{{$gift->products[0]->image}}" alt="{{$gift->title}}" class=" Polaris-Thumbnail Polaris-Thumbnail--sizeMedium"></td>
-                    
+
                       <td class="Polaris-DataTable__Cell  Polaris-DataTable__Cell--firstColumn" >{{$gift->title}}</td>
-                      <td class="Polaris-DataTable__Cell  Polaris-DataTable__Cell--firstColumn"> {{number_format($gift->triggered_amount,2)}} $</td>
+                      <td class="Polaris-DataTable__Cell  Polaris-DataTable__Cell--firstColumn"> ${{number_format($gift->triggered_amount,2)}}</td>
                       <td class="Polaris-DataTable__Cell  Polaris-DataTable__Cell--firstColumn">
                         @if($gift->active ==1 )
                         <span class="Polaris-Badge Polaris-Badge--statusSuccess">
-                          
+
                           <span class="Polaris-Badge__Content">Published</span>
                         </span>
                         @else
                         <span class="Polaris-Badge Polaris-Badge--statusWarning">
-                          
+
                           <span class="Polaris-Badge__Content">Not Published</span>
                         </span>
                         @endif
@@ -96,19 +95,19 @@
                       @else
                       <form action="{{ route ('gift.state.update',$gift->id) }}" method="POST">
                         @csrf
-                        
+
                         {{ method_field('PATCH')}}
                         <input type="hidden" name="active" value="1">
                         <button type="submit" class="ml-4 Polaris-Button Polaris-Button--sizeSlim"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text">DeAactive</span></span></button>
                     </form>
                     @endif
 
-                    
+
                   <button type="button"  class="ml-4 Polaris-Button Polaris-Button--sizeSlim"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text"><a href="{{ route('gift.edit',$gift->id)}}">Update</a></span></span></button>
-                  
-                    
-                        
-                        
+
+
+
+
                   </div> --}}
                   <div class="Polaris-ButtonGroup Polaris-ButtonGroup--segmented" data-buttongroup-segmented="true">
                     @if($gift->active ==1 )
@@ -116,17 +115,17 @@
                           @csrf
                           {{ method_field('PATCH')}}
                           <input type="hidden" name="active" value="0">
-                          
+
                           <div class="Polaris-ButtonGroup__Item"><button type="submit"  class="Polaris-Button"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text">Active</span></span></button></div>
                       </form>
                       @else
                       <form action="{{ route ('gift.state.update',$gift->id) }}" method="POST">
                         @csrf
-                        
+
                         {{ method_field('PATCH')}}
                         <input type="hidden" name="active" value="1">
-                        
-                        <div class="Polaris-ButtonGroup__Item"><button type="submit"  class="Polaris-Button"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text">DeActive</span></span></button></div>
+
+                        <div class="Polaris-ButtonGroup__Item"><button type="submit"  class="Polaris-Button"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text">Deactivate</span></span></button></div>
                     </form>
                     @endif
                     {{-- <div class="Polaris-ButtonGroup__Item"><a  class="Polaris-Button"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text">Active</span></span></a></div> --}}
@@ -144,14 +143,14 @@
                     {{-- <tr class="Polaris-DataTable__TableRow">
                      <!-- <td class="Polaris-Thumbnail Polaris-Thumbnail--sizeSmall"style="--top-bar-background:#00848e; --top-bar-background-lighter:#1d9ba4; --top-bar-color:#f9fafb; --p-frame-offset:0px;"><img src="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg" alt="Black choker necklace" class="Polaris-Thumbnail__Image"></td> -->
                      <td class="Polaris-Thumbnail Polaris-Thumbnail--sizeLarge"><img src="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg" alt="Black choker necklace" class="Polaris-Thumbnail__Image"></td>
-                    
+
                       <th class="Polaris-DataTable__Cell  Polaris-DataTable__Cell--firstColumn" scope="row">Free Gift Over 100$</th>
                       <td class="Polaris-DataTable__Cell  Polaris-DataTable__Cell--numeric">free from US $100.00</td>
                       <td class="Polaris-DataTable__Cell  Polaris-DataTable__Cell--numeric"><button type="button" class="Polaris-Button Polaris-Button--sizeSlim"><span class="Polaris-Button__Content"><span class="Polaris-Button__Text">Disable</span></span></button></td>
                     </tr> --}}
-                     
+
                   </tbody>
-                  
+
                 </table>
               </div>
             </div>
