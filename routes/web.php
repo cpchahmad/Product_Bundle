@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 // ->middleware('auth.shopify')
 Route::get('/', 'BundlesController@index')->name('home');
-// Route::group(['prefix' => 'admin', 'middleware' => ['auth.shopify']], function(){
-    Route::group(['prefix' => 'admin'], function(){
+ Route::group(['prefix' => 'admin', 'middleware' => ['auth.shopify']], function(){
+//    Route::group(['prefix' => 'admin'], function(){
     Route::get('/', 'BundlesController@index')->name('home');
     Route::get('gifts/create','GiftController@giftCreate')->name('gift.create');
     Route::get('gifts/edit/{id}','GiftController@giftedit')->name('gift.edit');
